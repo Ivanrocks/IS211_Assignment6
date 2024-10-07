@@ -37,12 +37,13 @@ def convert(fromUnit, toUnit, value):
         }
     }
     #Requirement: Check that converting from incompatible units will raise a ConversionNotPossible exception
+    if fromUnit == toUnit:
+        return float(value)
+
     if fromUnit not in allowedConversions.keys() or toUnit not in allowedConversions[fromUnit].keys():
         raise ConversionNotPossible
 
     #Requirement: Check that converting from one unit to itself returns the same value for all units
-    if fromUnit == toUnit:
-        return float(value)
 
     result = allowedConversions[fromUnit][toUnit](value)
 

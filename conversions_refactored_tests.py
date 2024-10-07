@@ -51,8 +51,16 @@ class TestTemperatureConversion(unittest.TestCase):
         ])
     ]
 
-
+    conversion_to_itself = (
+        ("celsius", 10),
+        ("fahrenheit",10),
+        ("kelvin", 10),
+        ("miles", 10),
+        ("yards", 10),
+        ("meters", 10)
+)
     def test_conversions_refactored(self):
+        print("Testing conversions")
         for test in self.known_values:
             print("Testing {0} to {1}.".format(test[0],test[1]))
             for case in test[2]:
@@ -60,27 +68,42 @@ class TestTemperatureConversion(unittest.TestCase):
                 result = conversions_refactored.convert(test[0], test[1], case[0])
                 self.assertEqual(case[1],result)
             print("\n")
+        print("\n")
+
+    def test_conversion_to_itself(self):
+        print("Testing Conversion to itself")
+        for test in self.conversion_to_itself:
+            print("Testing {0} to {1}.".format(test[0], test[0]))
+            result = conversions_refactored.convert(test[0], test[0], test[1])
+            self.assertEqual(test[1],result)
+        print("\n")
+
+
 
     def test_bad_fromUnit_input(self):
         print("Testing bad input fromUnit")
         with self.assertRaises(conversions_refactored.ConversionNotPossible):
             self.assertRaises(conversions_refactored.convert("Meteor","",0))
+        print("\n")
 
     def test_bad_toUnit_input(self):
         print("Testing bad input toUnit")
         with self.assertRaises(conversions_refactored.ConversionNotPossible):
             self.assertRaises(conversions_refactored.convert("Meter","Meteor",0))
+        print("\n")
 
 
     def test_converting_incompatible_units(self):
-        print("Testing bad input toUnit")
+        print("Testing incompatible_units")
         with self.assertRaises(conversions_refactored.ConversionNotPossible):
             self.assertRaises(conversions_refactored.convert("Meter","kelvin",0))
+        print("\n")
 
     def test_bad_value_input(self):
         print("Testing bad input value")
         with self.assertRaises(conversions_refactored.NotANumber):
             self.assertRaises(conversions_refactored.convert("Meter","Meteor","0p"))
+        print("\n")
 
 if __name__ == '__main__':
     unittest.main()
